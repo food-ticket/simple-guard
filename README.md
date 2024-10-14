@@ -1,9 +1,9 @@
 # simple-guard
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![image](https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square)](https://github.com/astral-sh/ruff/blob/main/LICENSE)
+[![image](https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square)](https://github.com/food-ticket/simple-guard/blob/main/LICENSE)
 
-`simple_guard` is a lightweight, fast & extensible OpenAI wrapper for simple LLM guardrails.
+`simple-guard` is a lightweight, fast & extensible OpenAI wrapper for simple LLM guardrails.
 
 ## Installation
 Add `simple-guard` to your project by running the code below.
