@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "simple-guard"
-version = "0.1.5"
+version = "0.1.6"
 description = "A Lightweight & Extensible OpenAI Wrapper for Simple Guardrails"
 authors = ["Bastiaan Witte <bastiaan@foodticket.nl>"]
 license = "Apache License 2.0"
