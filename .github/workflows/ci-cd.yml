@@ -55,8 +55,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-        contents: write  # IMPORTANT: mandatory for making GitHub Releases
-        id-token: write  # IMPORTANT: mandatory for sigstore
+        contents: write
+        id-token: write
 
     steps:
     - name: Download all the dists
