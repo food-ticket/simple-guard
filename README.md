@@ -1,14 +1,14 @@
 # simple-guard
 
-Guardrails are a set of rules that a developer can use to ensure that their AI models are safe and ethical. Guardrails can be used to check for biases, ensure transparency, and prevent harmful or dangerous behavior.
+Guardrails are a set of rules that a developer can use to ensure that their LLM models are safe and ethical. Guardrails can be used to check for biases, ensure transparency, and prevent harmful or dangerous behavior.
 
-`simple-guard` implement guardrails through three custom classes:
-- Assistant: Main class that accepts and executes requests
-- Guard: A set of rules
+`simple-guard` implements guardrails through:
+- Assistant: Main class that accepts and executes requests, much like the OpenAI client
+- Guard: The guard holds the set of rules
 - Rule: A limitation on the content it refers to
 
 ## Assistant
-The Assistant is the query interface. The class holds the prompt and context, and executes and handles the rules in the correct order. The class also collects statistics like tokens and duration, that are convenient for logging purposes.
+The Assistant is the query interface. The class holds the prompt and context, and executes and processes the rules in the correct order. The class also collects statistics like tokens and duration, that are convenient for logging purposes.
 
 Setting up an assistant is as easy as:
 ```python
