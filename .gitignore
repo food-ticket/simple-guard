@@ -2,4 +2,6 @@
 .venv/*
 .DS_Store
 *.ipynb_checkpoints/*
+dist
 dist/*
+.ruff_cache

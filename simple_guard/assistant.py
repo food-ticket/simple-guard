@@ -10,8 +10,8 @@ class Assistant:
     def __init__(
         self,
         prompt: str,
-        instruction: str,
         client: OpenAI,
+        instruction: Optional[str] = None,
         img_url: Optional[str] = None,
         guard: Optional[Guard] = None,
         model: Optional[str] = "gpt-4o-mini",
@@ -24,28 +24,38 @@ class Assistant:
         self.guard = guard
         self.model = model
 
+        self.set_messages()
+
         self.total_tokens = 0
         self.response = None
 
-        user_input = [{"type": "text", "text": prompt}]
-        if img_url:
+    def set_messages(self):
+        user_input = [{"type": "text", "text": self.prompt}]
+
+        if self.img_url:
             user_input.append(
                 {
                     "type": "image_url",
-                    "image_url": {"url": f"{img_url}"},
+                    "image_url": {"url": f"{self.img_url}"},
                 }
             )
 
         self.messages = [
             {
-                "role": "system",
-                "content": [{"type": "text", "text": instruction}],
-            },
-            {
                 "role": "user",
                 "content": user_input,
             },
         ]
+
+        if self.instruction:
+            self.messages.insert(
+                0,
+                {
+                    "role": "system",
+                    "content": [{"type": "text", "text": self.instruction}],
+                },
+            )
+        return self
 
     def execute(self, temperature: float = 0.7):
         if self.guard:
