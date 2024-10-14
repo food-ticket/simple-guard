@@ -1,5 +1,6 @@
 # simple-guard
 
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Django)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![image](https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square)](https://github.com/food-ticket/simple-guard/blob/main/LICENSE)
 
