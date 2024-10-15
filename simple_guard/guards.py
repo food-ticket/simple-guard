@@ -28,8 +28,8 @@ class Guard:
         temperature: float = 0.7,
         model: str = "gpt-4o-mini",
     ) -> str:
-        input_rules = [rule for rule in self.rules if rule.type == "input"]
-        output_rules = [rule for rule in self.rules if rule.type == "output"]
+        input_rules = [rule for rule in self.rules if rule.on == "input"]
+        output_rules = [rule for rule in self.rules if rule.on == "output"]
 
         # Find user prompt in messages
         user_prompt = next(

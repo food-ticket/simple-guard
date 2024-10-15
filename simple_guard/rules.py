@@ -23,13 +23,13 @@ class Rule:
 
     def __init__(
         self,
-        type: str,
+        on: str,
         statement: Optional[str] = None,
         on_fail: Optional[str] = "exception",
     ):
         """Construct a rule object"""
         # Properties
-        self.type = type
+        self.on = on
         self.on_fail = on_fail
         self.content = ""
 
@@ -45,16 +45,16 @@ class Rule:
 
     def set_statement(self, statement: str):
         self.statement = statement
-        if self.type == "input":
+        if self.on == "input":
             self.rule = (
                 self.INPUT_RULE_LEADER + self.statement + self.INPUT_RULE_TRAILER
             )
-        elif self.type == "output":
+        elif self.on == "output":
             self.rule = (
                 self.OUTPUT_RULE_LEADER + self.statement + self.OUTPUT_RULE_TRAILER
             )
         else:
-            raise NotImplementedError(f"Rule type {self.type} not supported")
+            raise NotImplementedError(f"Rule type {self.on} not supported")
         return self
 
     def set_fail_policy(self, on_fail: str):
@@ -124,7 +124,7 @@ class Rule:
 
 class Topical(Rule):
     def __init__(self, topics: List[str], *args):
-        super().__init__(type="input", *args)
+        super().__init__(on="input", *args)
         self.set_statement(
             f"The allowed topics are {', '.join(topics)}. Are you sure the question is in one of these topics?"
         )
@@ -146,7 +146,7 @@ class Pii(Rule):
     ]
 
     def __init__(self, *args):
-        super().__init__(type="input", *args)
+        super().__init__(on="input", *args)
         self.set_fail_policy("fix")
 
         # Setup
@@ -185,7 +185,7 @@ class Pii(Rule):
 
 class HarmfulContent(Rule):
     def __init__(self, *args):
-        super().__init__(type="output", *args)
+        super().__init__(on="output", *args)
         self.set_statement(
             "The answer may not contain harmful or dangerous content. The answer must solely consist of language suitable for the workplace."
         )
