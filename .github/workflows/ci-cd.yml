@@ -66,12 +66,6 @@ jobs:
     permissions:
         id-token: write
     steps:
-    - uses: trstringer/manual-approval@v1
-      with:
-        secret: ${{ github.TOKEN }}
-        approvers: Data engineers
-        minimum-approvals: 1
-        exclude-workflow-initiator-as-approver: false
     - name: Download all the dists
       uses: actions/download-artifact@v4
       with:
