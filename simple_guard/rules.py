@@ -24,6 +24,7 @@ class Rule:
     def __init__(
         self,
         on: str,
+        priority: Optional[float] = 0.5,
         statement: Optional[str] = None,
         on_fail: Optional[str] = "exception",
     ):
@@ -32,6 +33,7 @@ class Rule:
         self.on = on
         self.on_fail = on_fail
         self.content = ""
+        self.priority = priority
 
         # Rule
         if statement:
@@ -60,6 +62,11 @@ class Rule:
     def set_fail_policy(self, on_fail: str):
         assert on_fail in Rule.ON_FAIL_OPTIONS, f"On failure {on_fail} not supported"
         self.on_fail = on_fail
+        return self
+
+    def set_priority(self, priority: float):
+        assert 0 < priority <= 1, "Priority has to be between 0-1."
+        self.priority = priority
         return self
 
     def check(self, content: str):
@@ -122,7 +129,7 @@ class Rule:
         raise Exception("Max tries exceeded.")
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(pass={self.allowed}, total_tokens={self.total_tokens})"
+        return f"{self.__class__.__name__}({tuple(self.__dict__.values())})"
 
 
 class Topical(Rule):
@@ -151,6 +158,7 @@ class Pii(Rule):
     def __init__(self, *args):
         super().__init__(on="input", *args)
         self.set_fail_policy("fix")
+        self.set_priority(1)
 
         # Setup
         self.pii_analyzer = AnalyzerEngine()

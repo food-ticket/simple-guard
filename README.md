@@ -7,7 +7,6 @@
 `simple-guard` is a lightweight, fast & extensible OpenAI wrapper for simple LLM guardrails.
 
 ## Installation
-Add `simple-guard` to your project by running the code below.
 
 ```bash
 pip install simple-guard
@@ -34,8 +33,11 @@ assistant = Assistant(
     )
 )
 
-response = assistant.execute()
->>> Assistant(prompt="What is the largest animal?", img_url="None", response="The largest animal is the blue whale", guard=Guard(name="Guardrails", rules="[Pii(pass=True, total_tokens=0), Topical(pass=True, total_tokens=103)]"), total_tokens=186, total_duration=2.397115230560303)
+answer = assistant.execute()
+print(answer.response)
+print(answer.guard)
+>>> "The largest animal is the blue whale"
+>>> Guard(rules="[Topical(priority=0.5, pass=True, total_tokens=103)]")
 ```
 
 ## Rules
@@ -53,7 +55,18 @@ guard = Guard.from_rules(
 )
 ```
 
-If input contains PII, it will be anonymised, and the values will be replaced by <PERSON> or <EMAILADDRESS> before sending it to the vendor.
+If input contains PII, it will be anonymised, and the values will be replaced by <PERSON> or <EMAIL_ADDRESS> before sending it to the vendor. To prevent anonymised data to be sent, you could overwrite this current behaviour with the `set_fail_policy()` method:
+
+```python
+from simple_guard.rules import Pii
+
+pii_rule = Pii().set_fail_policy("exception")
+guard = Guard.from_rules(
+    pii_rule
+)
+```
+
+Note: The PII rule has the highest priority (`1`) by default. You can change the order of the rule execution with the `set_priority()` rule method.
 
 ### Topical
 
@@ -81,7 +94,7 @@ guard = Guard.from_rules(
 
 ### Custom rules
 
-`simple-guard` is extensible with your own custom rules. Creating a rule is as simple as:
+`simple-guard` is extensible with your own custom rules by inheriting the base `Rule` class. Creating a rule is as simple as:
 
 ```python
 from simple_guard.rules import Rule
@@ -96,7 +109,7 @@ class Jailbreaking(Rule):
 
 ```
 
-If a rule fails, there are three options, exception() (default), ignore (not recommended), or fix(). It is recommended to overwrite the method used.
+If a rule fails, there are three options, exception() (default), ignore (not recommended), or fix().
 
 Using your rule is as simple as adding it to the Guard:
 

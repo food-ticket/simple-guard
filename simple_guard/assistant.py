@@ -76,11 +76,4 @@ class Assistant:
         return self
 
     def __repr__(self):
-        return repr(
-            f"""Assistant(prompt="{self.prompt}",""",
-            f"""img_url="{self.img_url}","""
-            f"""response="{self.response.choices[0].message.content}",""",
-            f"""guard={self.guard}",""",
-            f"""total_tokens={self.total_tokens}",""",
-            f"""total_duration={self.total_duration}")""",
-        )
+        return f"{self.__class__.__name__}({tuple(self.__dict__.values())})"
