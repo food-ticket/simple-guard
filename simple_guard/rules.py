@@ -90,18 +90,21 @@ class Rule:
     def fail(self):
         if self.on_fail == "ignore":
             pass
+
         elif self.on_fail == "exception":
             self.exception()
+
         elif self.on_fail == "fix":
             # Prevent loop
-            if self.tries < self.MAX_TRIES:
-                self.tries += 1
-                # Call fix that resets content
-                self.fix()
-                # Check again
-                self.check(self.content)
-            else:
+            if self.tries >= self.MAX_TRIES:
                 self.max_tries_exceeded()
+
+            self.tries += 1
+            # Call fix that resets content
+            self.fix()
+            # Check again
+            self.check(self.content)
+
         else:
             raise NotImplementedError(f"On failure {self.on_failure} not supported")
 

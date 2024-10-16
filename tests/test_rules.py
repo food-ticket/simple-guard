@@ -82,3 +82,18 @@ def test_pii_fix_person(test_input, expected):
     rule.check(test_input)
     rule.fix()
     assert rule.content == expected
+
+
+@pytest.mark.parametrize(
+    "test_input,expected",
+    [
+        ("You can reach me at (555) 555-1234", "You can reach me at <PHONE_NUMBER>"),
+        ("Please call me on +(555) 122-1234", "Please call me on +<PHONE_NUMBER>"),
+        ("My phonenumber is known", "My phonenumber is known"),
+    ],
+)
+def test_pii_fix_phone_number(test_input, expected):
+    rule = Pii()
+    rule.check(test_input)
+    rule.fix()
+    assert rule.content == expected
