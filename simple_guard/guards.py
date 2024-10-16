@@ -8,18 +8,16 @@ from rules import Rule
 class Guard:
     def __init__(
         self,
-        name: str,
         rules: List[Rule],
     ):
-        self.name = name
         self.rules = rules
         self.content = ""
         self.total_tokens = 0
         self.response = None
 
     @staticmethod
-    def from_rules(name, rules: List[Rule]):
-        return Guard(name=name, rules=rules)
+    def from_rules(rules: List[Rule]):
+        return Guard(rules=rules)
 
     def apply(
         self,
@@ -30,6 +28,10 @@ class Guard:
     ) -> str:
         input_rules = [rule for rule in self.rules if rule.on == "input"]
         output_rules = [rule for rule in self.rules if rule.on == "output"]
+
+        # Sort rules based on priority, highest priority first
+        input_rules.sort(key=lambda x: x.priority, reverse=True)
+        output_rules.sort(key=lambda x: x.priority, reverse=True)
 
         # Find user prompt in messages
         user_prompt = next(
@@ -75,4 +77,4 @@ class Guard:
         return self.total_tokens
 
     def __repr__(self):
-        return f"""Guard(name="{self.name}", rules="{self.rules}")"""
+        return f"{self.__class__.__name__}({tuple(self.__dict__.values())})"
