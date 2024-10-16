@@ -15,9 +15,17 @@ presidio-anonymizer = "^2.2.351"
 python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^6.0.0"
+pytest = "^7.0.0"
 pre-commit = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "simple_guard"
+]
+filterwarnings = [
+    "ignore::UserWarning",
+]
